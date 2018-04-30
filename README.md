@@ -1,6 +1,6 @@
 # Exchange Union
 
-[![Gitter chat](https://img.shields.io/badge/chat-on%20gitter-rose.svg)](https://gitter.im/exchangeunion/Lobby)
+[![Build Status](https://travis-ci.org/ExchangeUnion/xud.svg?branch=master)](https://travis-ci.org/ExchangeUnion/xud) [![Gitter chat](https://img.shields.io/badge/chat-on%20gitter-rose.svg)](https://gitter.im/exchangeunion/Lobby)
 
 [Exchange Union](https://www.exchangeunion.com/) (XU) is a decentralized exchange layer built on the [Lightning](http://lightning.network/) and [Raiden](https://raiden.network/) networks to enable trustless and instant cryptocurrency swaps and order fulfillment between exchanges.
 
@@ -38,25 +38,36 @@ Xud uses [MySQL](https://www.mysql.com/) or [MariaDB](https://mariadb.org/). You
 
 ## Command-Line Interface
 
+Spawn a new `xud` process
+
+```bash
+~/xud/bin $ ./xud
+Options:
+  -r, --rpc.port                                        [number] [default: 8886]
+  -p, --p2p.port                                        [number] [default: 8885]
+```
+
+Interact with an `xud` process, identified by its `rpc` port
+
 ```bash
 ~/xud/bin $ ./xucli --help
 xucli [command]
 
 Commands:
-  xucli connect <host> [port]                   connect to an xu node
-  xucli getinfo                                 get general info from the xud node
-  xucli getorders                               get orders from the orderbook
-  xucli getpairs                                get orderbook's available pairs
-  xucli placeorder <pairId> <price> <quantity>  place an order
-  xucli shutdown                                gracefully shutdown the xud node
-  xucli tokenswap <identifier> <role>           perform a raiden token swap
+  xucli connect <host> [port]                    connect to an xu node
+  xucli getinfo                                  get general info from the xud node
+  xucli getorders                                get orders from the orderbook
+  xucli getpairs                                 get orderbook's available pairs
+  xucli placeorder <pair_id> <price> <quantity>  place an order
+  xucli shutdown                                 gracefully shutdown the xud node
+  xucli tokenswap <identifier> <role>            perform a raiden token swap
   <sending_amount> <sending_token>
   <receiving_amount> <receiving_token>
 
 Options:
   --version      Show version number                                   [boolean]
   --help         Show help                                             [boolean]
-  -r, --rpcport                                         [number] [default: 8886]
+  -r, --rpc.port                                        [number] [default: 8886]
 ```
 
 ## Configuration
@@ -64,12 +75,12 @@ Options:
 The configuration file uses [TOML](https://github.com/toml-lang/toml) and by default is located at  `~/.xud/xud.conf` on Linux or `AppData\Local\Xud\xud.conf` on Windows. Default settings which can be overridden are shown below.
 
 ```toml
-lndDir = "~/.lnd"
-rpcPort = 8886
+[rpc]
+port = 8886
 
 [db]
 username = "xud"
-password = ""
+password = null
 database = "xud"
 port = 3306
 host = "localhost"
@@ -87,7 +98,6 @@ disable = false
 port = 5001
 ```
 
-
 ## Database Initialization
 
 To initialize the database with default testing data, run the following command:
@@ -95,3 +105,7 @@ To initialize the database with default testing data, run the following command:
 ```bash
 npm run db:init
 ```
+
+## Documentation
+
+[Read the JSDoc here](doc/jsdoc.md).
